@@ -1,0 +1,55 @@
+ var athletics = require('./module1');
+ function printName(name){
+	console.log('Welcome ' + name);
+ }
+ 
+var salary = function calculateSalary(basic,hra,da,conveyance,lunch, pf, esi,insurance , tax)
+{
+	var deductions = pf +  esi + insurance + tax;
+	var allowances = basic+hra+da+conveyance+lunch;
+	
+	console.log(allowances-deductions);
+}
+ 
+ function printInfo(){
+  //function as a variable  
+ salary(10000,5000,2000,1000,1000,575,75,300,0)
+ // global variables  __dirname __filename setTimeout setInterval
+  console.log(__dirname);
+  console.log(__filename);
+ }
+ // setTimeout(printInfo,10000);
+  
+  //setInterval(printInfo,3000);
+  
+  //callback functions
+  
+  
+  console.log("user 1 made a request");
+  //console.log("Database opertaion takes 5 secs");
+  //console.log("Data Delivered to the user1");
+  
+  setTimeout(callback,5000);
+  
+  console.log("user 2 made a request");
+  //console.log("Database opertaion takes 5 secs");
+  //console.log("Data Delivered to the user1");
+  
+  setTimeout(callback,5000);
+  
+  
+  console.log("user 3 made a request");
+  //console.log("Database opertaion takes 5 secs");
+  //console.log("Data Delivered to the user1");
+  setTimeout(callback,5000);
+  
+  function callback(){
+		console.log("Queried the database and delivered data in 5 seconds");
+  }
+  
+  
+  //Modules
+  
+  athletics.relay();
+  athletics.longJump();
+  
