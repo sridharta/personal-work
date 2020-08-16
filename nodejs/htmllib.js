@@ -8,31 +8,31 @@ module.exports  = {
 		var thstyle = "<th style='text-align:right;border:1px solid #333''>";
 		
 		var tableStart = "<table>"
-		var row_name = "<tr ><td" + style +">Name</td>" + tdstyle + name + "</td><tr>";
-		var row_basic = "<tr><td>Basic</td>" + tdstyle + basic + "</td><tr>";
-		var row_hra = "<tr ><td" + style + ">Basic</td>" + tdstyle +  hra + "</td><tr>";
-		var row_da = "<tr ><td" + style + ">Dearness Allowance</td>"+ tdstyle +   da + "</td><tr>";
-		var row_conveyance = "<tr ><td" + style +">Conveyance</td>" + tdstyle +  + conveyance + "</td><tr>";
-		var row_lunch = "<tr ><td" + style +">Lunch</td>" + tdstyle  + lunch + "</td><tr>";
+		var row_name = "<tr ><td" + style +">Name</td>" + tdstyle + name + "</td></tr>";
+		var row_basic = "<tr><td>Basic</td>" + tdstyle + basic + "</td></tr>";
+		var row_hra = "<tr ><td" + style + ">HRA</td>" + tdstyle +  hra + "</td></tr>";
+		var row_da = "<tr ><td" + style + ">Dearness Allowance</td>"+ tdstyle +   da + "</td></tr>";
+		var row_conveyance = "<tr ><td" + style +">Conveyance</td>" + tdstyle +  + conveyance + "</td></tr>";
+		var row_lunch = "<tr ><td" + style +">Lunch</td>" + tdstyle  + lunch + "</td></tr>";
 
 		
 		var gross = basic+hra+da+conveyance+lunch;
-		var row_gross_total = "<tr ><th" + style +">Gross Salary ....(A)</th>" + thstyle +   gross+ "</td><tr>";
-		var row_pf = "<tr ><td" + style +">Provident Fund</td>" + tdstyle +   pf + "</td><tr>";
-		var row_esi = "<tr ><td" + style +">ESI</td>"  + tdstyle +  esi + "</td><tr>";
-		var row_insurance = "<tr ><td" + style +">Life Insurance</td>" + tdstyle +  insurance + "</td><tr>";
+		var row_gross_total = "<tr ><th" + style +">Gross Salary ....(A)</th>" + thstyle +   gross+ "</td></tr>";
+		var row_pf = "<tr ><td" + style +">Provident Fund</td>" + tdstyle +   pf + "</td></tr>";
+		var row_esi = "<tr ><td" + style +">ESI</td>"  + tdstyle +  esi + "</td></tr>";
+		var row_insurance = "<tr ><td" + style +">Life Insurance</td>" + tdstyle +  insurance + "</td></tr>";
 		
-		var row_tax = "<tr ><td" + style +">TDS</td>" + tdstyle +   tax + "</td><tr>";
+		var row_tax = "<tr ><td" + style +">TDS</td>" + tdstyle +   tax + "</td></tr>";
 		var deductions = pf+esi+insurance+tax;
 		var netSalary = gross - deductions;
-		var row_total_ded = "<tr ><th" + style +">Less Deductions  .... (B)</th>" + tdstyle +  deductions + "</td><tr>";
-		var row_net_salary = "<tr ><th" + style +">Net Salary C (A-B = C)</th>" + thstyle +  netSalary + "</th><tr>";
+		var row_total_ded = "<tr ><th" + style +">Less Deductions  .... (B)</th>" + tdstyle +  deductions + "</td></tr>";
+		var row_net_salary = "<tr ><th" + style +">Net Salary C (A-B = C)</th>" + thstyle +  netSalary + "</th></tr>";
 		var salaryInWords = moneyInWords(netSalary);
-		var rowinwords = "<tr><th colspan='4'>" + salaryInWords + "</th></tr>";
+		var rowinwords = "<tr><th colspan='2'>" + salaryInWords + "</th></tr>";
 		var tableEnd = "</table>";
 		
 		
-		htmlResponse = tableStart + row_name+row_hra+row_da+row_conveyance+row_lunch+row_gross_total+row_pf+row_esi+row_insurance+row_tax+row_total_ded+row_net_salary + rowinwords + tableEnd;
+		htmlResponse = tableStart + row_name+row_basic+row_hra+row_da+row_conveyance+row_lunch+row_gross_total+row_pf+row_esi+row_insurance+row_tax+row_total_ded+row_net_salary + rowinwords + tableEnd;
 		
 		return htmlResponse;
 		
@@ -54,16 +54,36 @@ function moneyInWords(salary){
 		console.log(realDigits[3]);
 		console.log(realDigits[4]);
 		var inrInWords ="";
-		 
+		var hundredInWords = "" ;
+		if (realDigits[2] !== 0)
+		{
+			hundredInWords = numberInWord(realDigits[2]) ;
+			hundredInWords = hundredInWords + "	hundred and " 
+		}
 		
-		if (realDigits > 5)
+		
+		console.log("Digits:" + realDigits);
+		if (realDigits.length > 5)
 		{
 			
-			inrInWords  =  "INR " + realDigits[0] + "lakhs," + realDigits[1]+realDigits[2]+" thousand, " + realDigits[4] + " hundred, " + + realDigits[4]+realDigits[5] + " Only";
+			console.log("In Hundreds:" + hundredInWords);
+			console.log("Digit 1 and 2 " + realDigits[0]+realDigits[1]);
+			
+			var textnumber =  realDigits[0].toString() + realDigits[1].toString()+realDigits[2].toString();
+			var textnumber2 = realDigits[3].toString() +realDigits[4].toString();
+			console.log("Hundreds" + textnumber);
+			console.log("Tens " + textnumber2);
+			 
+			var number = parseInt(textnumber);
+			var number2 = parseInt(textnumber2);
+			console.log(number);
+			inrInWords =  "INR "   +  TensInWord(textnumber) + " thousand, " + hundredInWords +  TensInWord(number2)  + " Only";
 
 		}
 		else
-		{	console.log("Digit 1 and 2 " + realDigits[0]+realDigits[1]);
+		{
+			console.log("In Hundreds:" + hundredInWords);
+			console.log("Digit 1 and 2 " + realDigits[0]+realDigits[1]);
 			var textnumber =realDigits[0].toString()+realDigits[1].toString();
 			var textnumber2 = realDigits[3].toString() +realDigits[4].toString();
 			console.log(textnumber);
@@ -71,7 +91,7 @@ function moneyInWords(salary){
 			var number = parseInt(textnumber);
 			var number2 = parseInt(textnumber2);
 			console.log(number);
-			inrInWords =  "INR " +  TensInWord(textnumber) + " thousand, " + numberInWord(realDigits[2]) + " hundred and " +  TensInWord(number2)  + " Only";
+			inrInWords =  "INR " +  TensInWord(textnumber) + " thousand, " + hundredInWords +  TensInWord(number2)  + " Only";
 
 		}
 			return inrInWords;
@@ -133,6 +153,12 @@ function TensInWord(number)
 			wordten = "Ninety";
 		
 	}
+	else if (number >= 100 )
+	{
+			wordten = "One Hundred and ";
+		
+	}
+
 	if (singleDigit > 0)
 	{
 		return wordten + " " + singleDigitWord;
